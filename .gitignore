@@ -25,3 +25,4 @@ context/source-material/working_files/
 *.ai
 *.mov
 *.mp4
+website/supabase/.temp/
