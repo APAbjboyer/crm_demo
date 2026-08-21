@@ -26,3 +26,5 @@ context/source-material/working_files/
 *.mov
 *.mp4
 website/supabase/.temp/
+
+.vercel
