@@ -1,0 +1,46 @@
+{
+  "name": "consulting-hub",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "eslint",
+    "test": "vitest"
+  },
+  "dependencies": {
+    "next": "16.3.1",
+    "react": "19.2.8",
+    "react-dom": "19.2.8",
+    "@ai-sdk/react": "latest",
+    "ai": "latest",
+    "@mdxeditor/editor": "latest",
+    "@supabase/ssr": "latest",
+    "@supabase/supabase-js": "latest",
+    "@tanstack/react-form": "latest",
+    "@tanstack/react-query": "latest",
+    "date-fns": "latest",
+    "lucide-react": "latest",
+    "react-markdown": "latest",
+    "rehype-external-links": "latest",
+    "rehype-highlight": "latest",
+    "rehype-slug": "latest",
+    "remark-gfm": "latest",
+    "unified": "latest",
+    "zustand": "latest"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4",
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "eslint": "^9",
+    "eslint-config-next": "16.3.1",
+    "tailwindcss": "^4",
+    "typescript": "^5",
+    "vitest": "latest",
+    "@testing-library/react": "latest",
+    "@testing-library/user-event": "latest"
+  }
+}

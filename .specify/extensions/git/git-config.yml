@@ -1,0 +1,11 @@
+auto_commit:
+  default: false
+  after_specify:
+    enabled: false
+    message: "[spec-kit] Add specification"
+  after_plan:
+    enabled: false
+    message: "[spec-kit] Add implementation plan"
+  after_tasks:
+    enabled: false
+    message: "[spec-kit] Add task list"
