@@ -31,6 +31,12 @@ export default function Home() {
           >
             Sign in
           </Link>
+          <Link
+            className="flex h-12 items-center justify-center px-6 text-sm font-medium text-zinc-600 underline-offset-4 hover:underline dark:text-zinc-400"
+            href="/contact"
+          >
+            Contact us
+          </Link>
         </div>
 
         <div className="mt-8 grid w-full gap-6 border-t border-black/10 pt-8 dark:border-white/10 sm:grid-cols-2">
