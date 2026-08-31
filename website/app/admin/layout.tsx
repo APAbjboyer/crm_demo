@@ -10,6 +10,7 @@ export default async function AdminLayout({ children }: { children: React.ReactN
       <nav className="flex items-center justify-between border-b border-[#A0ADC0]/40 bg-[#333132] px-6 py-3 sm:px-16">
         <div className="flex items-center gap-6">
           <span className="text-xs font-bold uppercase tracking-[0.14em] text-[#6EC9C0]">Admin</span>
+          <Link href="/admin/dashboard" className="text-sm font-medium text-white hover:text-[#6EC9C0]">Dashboard</Link>
           <Link href="/admin" className="text-sm font-medium text-white hover:text-[#6EC9C0]">Leads</Link>
           <Link href="/admin/people" className="text-sm font-medium text-white hover:text-[#6EC9C0]">People</Link>
           <Link href="/admin/orders" className="text-sm font-medium text-white hover:text-[#6EC9C0]">Orders</Link>
