@@ -22,3 +22,22 @@ export async function getOptionalUser() {
   const { data: { user } } = await supabase.auth.getUser()
   return user
 }
+
+/**
+ * Use in the /admin layout. Requires an authenticated user whose email is
+ * on the ADMIN_EMAILS allowlist — a signed-up chat-tool user is not
+ * automatically an admin. Redirects to /login if unauthenticated, or to
+ * / if authenticated but not an admin.
+ */
+export async function requireAdmin() {
+  const user = await requireAuth('/login?redirect_to=/admin')
+  const adminEmails = (process.env.ADMIN_EMAILS || '')
+    .split(',')
+    .map((e) => e.trim().toLowerCase())
+    .filter(Boolean)
+
+  if (!user.email || !adminEmails.includes(user.email.toLowerCase())) {
+    redirect('/')
+  }
+  return user
+}

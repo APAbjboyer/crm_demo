@@ -1,5 +1,4 @@
 // app/admin/page.tsx
-// Open for now — no login required. Auth is added in Build 2.
 import { createAdminClient } from '@/lib/supabase/admin'
 
 export const metadata = {

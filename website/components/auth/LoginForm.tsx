@@ -4,7 +4,7 @@ import { useForm } from '@tanstack/react-form'
 import { loginWithEmail } from '@/lib/auth/actions'
 import { useState } from 'react'
 
-export function LoginForm() {
+export function LoginForm({ redirectTo }: { redirectTo?: string }) {
   const [serverError, setServerError] = useState<string | null>(null)
 
   const form = useForm({
@@ -14,6 +14,7 @@ export function LoginForm() {
       const fd = new FormData()
       fd.set('email', value.email)
       fd.set('password', value.password)
+      if (redirectTo) fd.set('redirect_to', redirectTo)
       const result = await loginWithEmail(fd)
       if (result?.error) setServerError(result.error)
     },
