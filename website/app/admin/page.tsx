@@ -1,0 +1,113 @@
+// app/admin/page.tsx
+// Open for now — no login required. Auth is added in Build 2.
+import { createAdminClient } from '@/lib/supabase/admin'
+
+export const metadata = {
+  title: 'Leads — Admin',
+}
+
+export const dynamic = 'force-dynamic'
+
+const TYPE_LABELS: Record<string, string> = {
+  membership: 'Membership',
+  training_enrolment: 'Training / course enrolment',
+  consulting_review: 'Consulting / compliance review',
+}
+
+const STATUS_LABELS: Record<string, string> = {
+  new_lead: 'New lead',
+  contacted: 'Contacted',
+  discovery_call: 'Discovery call',
+  proposal: 'Proposal',
+  won: 'Won',
+  lost: 'Lost',
+}
+
+type Lead = {
+  id: string
+  type: string
+  status: string
+  message: string | null
+  created_at: string
+  people: {
+    name: string | null
+    email: string
+    phone: string | null
+    company: string | null
+    attributes: Record<string, string> | null
+  } | null
+}
+
+export default async function AdminLeadsPage() {
+  const supabase = createAdminClient()
+  const { data, error } = await supabase
+    .from('contacts')
+    .select('id, type, status, message, created_at, people(name, email, phone, company, attributes)')
+    .order('created_at', { ascending: false })
+
+  const leads = (data ?? []) as unknown as Lead[]
+
+  return (
+    <div className="flex flex-1 flex-col bg-white font-sans">
+      <header className="border-b-4 border-[#6EC9C0] bg-[#333132] px-6 py-10 sm:px-16">
+        <span className="text-xs font-bold uppercase tracking-[0.14em] text-[#6EC9C0]">Admin</span>
+        <h1 className="mt-2 text-3xl font-bold tracking-tight text-white">Leads</h1>
+        <p className="mt-1 text-sm text-[#A0ADC0]">
+          Every inquiry, newest first. {leads.length} total.
+        </p>
+      </header>
+
+      <main className="mx-auto w-full max-w-5xl flex-1 px-6 py-10 sm:px-16">
+        {error && (
+          <p className="rounded-md bg-red-50 px-4 py-3 text-sm text-red-700">
+            Couldn&apos;t load leads: {error.message}
+          </p>
+        )}
+
+        {!error && leads.length === 0 && (
+          <p className="text-sm text-[#808897]">No inquiries yet.</p>
+        )}
+
+        <div className="flex flex-col gap-4">
+          {leads.map((lead) => (
+            <div key={lead.id} className="rounded-lg border border-[#A0ADC0]/40 p-5">
+              <div className="flex flex-wrap items-start justify-between gap-2">
+                <div>
+                  <p className="text-base font-semibold text-[#29394D]">
+                    {lead.people?.name ?? 'Unknown'}{' '}
+                    <span className="font-normal text-[#808897]">— {lead.people?.email}</span>
+                  </p>
+                  <p className="mt-0.5 text-sm text-[#485F88]">
+                    {TYPE_LABELS[lead.type] ?? lead.type}
+                  </p>
+                </div>
+                <div className="flex flex-col items-end gap-1">
+                  <span className="rounded-full bg-[#6EC9C0]/20 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-[#29394D]">
+                    {STATUS_LABELS[lead.status] ?? lead.status}
+                  </span>
+                  <span className="text-xs text-[#808897]">
+                    {new Date(lead.created_at).toLocaleString('en-AU')}
+                  </span>
+                </div>
+              </div>
+
+              {lead.message && (
+                <p className="mt-3 text-sm leading-6 text-[#333132]">{lead.message}</p>
+              )}
+
+              <div className="mt-3 flex flex-wrap gap-x-6 gap-y-1 text-xs text-[#808897]">
+                {lead.people?.phone && <span>Phone: {lead.people.phone}</span>}
+                {lead.people?.company && <span>Company: {lead.people.company}</span>}
+                {lead.people?.attributes?.last_consulting_engagement_date && (
+                  <span>
+                    Last consulting engagement: {lead.people.attributes.last_consulting_engagement_date}
+                  </span>
+                )}
+              </div>
+            </div>
+          ))}
+        </div>
+      </main>
+    </div>
+  )
+}

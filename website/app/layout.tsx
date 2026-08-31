@@ -14,8 +14,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Consulting Hub",
-  description: "Consulting Hub",
+  title: "Australian Payroll Association",
+  description: "Membership, training and qualifications, consulting and compliance reviews, recruitment, and events for payroll professionals.",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {

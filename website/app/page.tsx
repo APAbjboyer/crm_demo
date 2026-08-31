@@ -1,65 +1,71 @@
 import Link from "next/link";
+import { InquiryForm } from "@/components/inquire/InquiryForm";
 
 export default function Home() {
   return (
-    <div className="flex flex-1 flex-col bg-zinc-50 font-sans dark:bg-black">
-      <main className="mx-auto flex w-full max-w-3xl flex-1 flex-col items-start justify-center gap-8 px-6 py-24 sm:px-16">
-        <span className="rounded-full border border-black/10 px-3 py-1 text-xs font-medium tracking-wide text-zinc-600 dark:border-white/15 dark:text-zinc-400">
-          Consulting Hub
-        </span>
+    <div className="flex flex-1 flex-col bg-white font-sans">
+      <header className="border-b-4 border-[#6EC9C0] bg-[#333132]">
+        <div className="mx-auto flex w-full max-w-5xl flex-col gap-3 px-6 py-14 sm:px-16">
+          <span className="text-xs font-bold uppercase tracking-[0.14em] text-[#6EC9C0]">
+            Australian Payroll Association
+          </span>
+          <h1 className="max-w-2xl text-4xl font-bold leading-tight tracking-tight text-white sm:text-5xl">
+            The national leader in payroll training, membership, and compliance advisory.
+          </h1>
+          <p className="max-w-xl text-lg leading-8 text-[#A0ADC0]">
+            Membership, training and qualifications, consulting and compliance
+            reviews, recruitment, and events — everything a payroll
+            professional needs, in one place.
+          </p>
+        </div>
+      </header>
 
-        <h1 className="max-w-xl text-4xl font-semibold leading-tight tracking-tight text-black dark:text-zinc-50">
-          Payroll compliance backup, for payroll and HR professionals
-        </h1>
-
-        <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-          Ask a specific compliance or audit question and get a straight answer &mdash;
-          built for people who already know payroll and just need a second set of
-          eyes, not a training course.
-        </p>
-
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <Link
-            className="flex h-12 items-center justify-center rounded-full bg-foreground px-6 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc]"
-            href="/signup"
-          >
-            Sign up
-          </Link>
-          <Link
-            className="flex h-12 items-center justify-center rounded-full border border-solid border-black/[.08] px-6 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a]"
-            href="/login"
-          >
-            Sign in
-          </Link>
-          <Link
-            className="flex h-12 items-center justify-center px-6 text-sm font-medium text-zinc-600 underline-offset-4 hover:underline dark:text-zinc-400"
-            href="/contact"
-          >
-            Contact us
-          </Link>
+      <main className="mx-auto flex w-full max-w-5xl flex-1 flex-col gap-16 px-6 py-16 sm:px-16">
+        <div className="grid w-full gap-8 sm:grid-cols-3">
+          <div>
+            <h2 className="text-sm font-bold uppercase tracking-wide text-[#485F88]">Membership</h2>
+            <p className="mt-2 text-sm leading-6 text-[#333132]">
+              Helpdesk advice, a resource library, and training discounts —
+              ongoing support for payroll professionals.
+            </p>
+          </div>
+          <div>
+            <h2 className="text-sm font-bold uppercase tracking-wide text-[#485F88]">Training &amp; Qualifications</h2>
+            <p className="mt-2 text-sm leading-6 text-[#333132]">
+              Nationally recognised payroll courses — virtual, online
+              self-paced, or in-person classroom.
+            </p>
+          </div>
+          <div>
+            <h2 className="text-sm font-bold uppercase tracking-wide text-[#485F88]">Consulting &amp; Compliance</h2>
+            <p className="mt-2 text-sm leading-6 text-[#333132]">
+              Independent payroll compliance reviews with tailored
+              recommendations for your organisation.
+            </p>
+          </div>
         </div>
 
-        <div className="mt-8 grid w-full gap-6 border-t border-black/10 pt-8 dark:border-white/10 sm:grid-cols-2">
+        <div className="grid w-full gap-10 sm:grid-cols-2">
           <div>
-            <h2 className="text-sm font-semibold text-black dark:text-zinc-50">
-              Compliance &amp; audits
-            </h2>
-            <p className="mt-2 text-sm leading-6 text-zinc-600 dark:text-zinc-400">
-              Ask about a specific award, Fair Work obligation, STP requirement,
-              or super calculation and work through it in a running conversation.
+            <h2 className="text-2xl font-bold tracking-tight text-[#29394D]">Get in touch</h2>
+            <p className="mt-2 text-sm leading-6 text-[#808897]">
+              Tell us what you need — membership, a training enrolment, or a
+              consulting/compliance review — and we&apos;ll get back to you
+              within one business day.
             </p>
           </div>
-          <div>
-            <h2 className="text-sm font-semibold text-black dark:text-zinc-50">
-              Built for professionals
-            </h2>
-            <p className="mt-2 text-sm leading-6 text-zinc-600 dark:text-zinc-400">
-              For in-house payroll teams and peer consultants who want specialist
-              backup on a specific case, not general payroll education.
-            </p>
-          </div>
+          <InquiryForm />
         </div>
       </main>
+
+      <footer className="border-t border-[#A0ADC0]/40 bg-[#333132]/5">
+        <div className="mx-auto flex w-full max-w-5xl items-center justify-between px-6 py-8 text-sm text-[#808897] sm:px-16">
+          <span>&copy; Australian Payroll Association</span>
+          <Link href="/login" className="font-medium text-[#485F88] underline-offset-4 hover:underline">
+            Existing member? Ask a compliance question →
+          </Link>
+        </div>
+      </footer>
     </div>
   );
 }
