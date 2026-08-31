@@ -12,6 +12,8 @@ export default async function AdminLayout({ children }: { children: React.ReactN
           <span className="text-xs font-bold uppercase tracking-[0.14em] text-[#6EC9C0]">Admin</span>
           <Link href="/admin" className="text-sm font-medium text-white hover:text-[#6EC9C0]">Leads</Link>
           <Link href="/admin/people" className="text-sm font-medium text-white hover:text-[#6EC9C0]">People</Link>
+          <Link href="/admin/orders" className="text-sm font-medium text-white hover:text-[#6EC9C0]">Orders</Link>
+          <Link href="/admin/newsletter" className="text-sm font-medium text-white hover:text-[#6EC9C0]">Newsletter</Link>
         </div>
         <LogoutButton />
       </nav>
