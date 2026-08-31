@@ -3,14 +3,22 @@
 import { redirect } from 'next/navigation'
 import { createClient } from '@/lib/supabase/server'
 
+// Only a same-site relative path is a safe redirect target — anything
+// else (an absolute URL, or `//host` protocol-relative) could send a
+// user off-site after login.
+function isSafeRedirect(path: string | null): path is string {
+  return !!path && path.startsWith('/') && !path.startsWith('//')
+}
+
 export async function loginWithEmail(formData: FormData) {
   const supabase = await createClient()
   const email = formData.get('email') as string
   const password = formData.get('password') as string
+  const redirectTo = formData.get('redirect_to') as string | null
 
   const { error } = await supabase.auth.signInWithPassword({ email, password })
   if (error) return { error: error.message }
-  redirect('/dashboard')
+  redirect(isSafeRedirect(redirectTo) ? redirectTo : '/dashboard')
 }
 
 export async function signupWithEmail(formData: FormData) {
