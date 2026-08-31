@@ -1,4 +1,5 @@
 // app/admin/people/page.tsx
+import Link from 'next/link'
 import { createAdminClient } from '@/lib/supabase/admin'
 
 export const metadata = {
@@ -68,12 +69,12 @@ export default async function AdminPeoplePage({
             Search
           </button>
           {query && (
-            <a
+            <Link
               href="/admin/people"
               className="flex items-center px-3 text-sm text-[#808897] hover:underline"
             >
               Clear
-            </a>
+            </Link>
           )}
         </form>
 
@@ -94,7 +95,9 @@ export default async function AdminPeoplePage({
             <div key={person.id} className="rounded-lg border border-[#A0ADC0]/40 p-5">
               <div className="flex flex-wrap items-start justify-between gap-2">
                 <p className="text-base font-semibold text-[#29394D]">
-                  {person.name ?? 'Unknown'}{' '}
+                  <Link href={`/admin/people/${person.id}`} className="hover:underline">
+                    {person.name ?? 'Unknown'}
+                  </Link>{' '}
                   <span className="font-normal text-[#808897]">— {person.email}</span>
                 </p>
                 {person.ok_to_contact && (

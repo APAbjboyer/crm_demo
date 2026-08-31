@@ -1,5 +1,7 @@
 // app/admin/page.tsx
+import Link from 'next/link'
 import { createAdminClient } from '@/lib/supabase/admin'
+import { StatusSelect } from '@/components/admin/StatusSelect'
 
 export const metadata = {
   title: 'Leads — Admin',
@@ -13,15 +15,6 @@ const TYPE_LABELS: Record<string, string> = {
   consulting_review: 'Consulting / compliance review',
 }
 
-const STATUS_LABELS: Record<string, string> = {
-  new_lead: 'New lead',
-  contacted: 'Contacted',
-  discovery_call: 'Discovery call',
-  proposal: 'Proposal',
-  won: 'Won',
-  lost: 'Lost',
-}
-
 type Lead = {
   id: string
   type: string
@@ -29,6 +22,7 @@ type Lead = {
   message: string | null
   created_at: string
   people: {
+    id: string
     name: string | null
     email: string
     phone: string | null
@@ -41,7 +35,7 @@ export default async function AdminLeadsPage() {
   const supabase = createAdminClient()
   const { data, error } = await supabase
     .from('contacts')
-    .select('id, type, status, message, created_at, people(name, email, phone, company, attributes)')
+    .select('id, type, status, message, created_at, people(id, name, email, phone, company, attributes)')
     .order('created_at', { ascending: false })
 
   const leads = (data ?? []) as unknown as Lead[]
@@ -68,22 +62,28 @@ export default async function AdminLeadsPage() {
         )}
 
         <div className="flex flex-col gap-4">
-          {leads.map((lead) => (
+          {leads.map((lead) => {
+            const person = lead.people
+            return (
             <div key={lead.id} className="rounded-lg border border-[#A0ADC0]/40 p-5">
               <div className="flex flex-wrap items-start justify-between gap-2">
                 <div>
                   <p className="text-base font-semibold text-[#29394D]">
-                    {lead.people?.name ?? 'Unknown'}{' '}
-                    <span className="font-normal text-[#808897]">— {lead.people?.email}</span>
+                    {person ? (
+                      <Link href={`/admin/people/${person.id}`} className="hover:underline">
+                        {person.name ?? 'Unknown'}
+                      </Link>
+                    ) : (
+                      'Unknown'
+                    )}{' '}
+                    <span className="font-normal text-[#808897]">— {person?.email}</span>
                   </p>
                   <p className="mt-0.5 text-sm text-[#485F88]">
                     {TYPE_LABELS[lead.type] ?? lead.type}
                   </p>
                 </div>
                 <div className="flex flex-col items-end gap-1">
-                  <span className="rounded-full bg-[#6EC9C0]/20 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-[#29394D]">
-                    {STATUS_LABELS[lead.status] ?? lead.status}
-                  </span>
+                  <StatusSelect contactId={lead.id} status={lead.status} />
                   <span className="text-xs text-[#808897]">
                     {new Date(lead.created_at).toLocaleString('en-AU')}
                   </span>
@@ -95,16 +95,17 @@ export default async function AdminLeadsPage() {
               )}
 
               <div className="mt-3 flex flex-wrap gap-x-6 gap-y-1 text-xs text-[#808897]">
-                {lead.people?.phone && <span>Phone: {lead.people.phone}</span>}
-                {lead.people?.company && <span>Company: {lead.people.company}</span>}
-                {lead.people?.attributes?.last_consulting_engagement_date && (
+                {person?.phone && <span>Phone: {person.phone}</span>}
+                {person?.company && <span>Company: {person.company}</span>}
+                {person?.attributes?.last_consulting_engagement_date && (
                   <span>
-                    Last consulting engagement: {lead.people.attributes.last_consulting_engagement_date}
+                    Last consulting engagement: {person.attributes.last_consulting_engagement_date}
                   </span>
                 )}
               </div>
             </div>
-          ))}
+            )
+          })}
         </div>
       </main>
     </div>
